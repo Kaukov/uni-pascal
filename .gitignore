@@ -1,4 +1,4 @@
 *
 !.gitignore
-!.pas
-!.txt
+!*.pas
+!*.txt
