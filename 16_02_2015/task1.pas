@@ -7,10 +7,8 @@
 
 program task1;
 
-const N = 10;
-
 type
-    array1d = Array[1..N] of Integer;
+    array1d = Array of Integer;
     fileType = Text;
 
 {
@@ -23,6 +21,31 @@ begin
     Write('Enter file name: ');
     ReadLn(fileName);
     Assign(fileIn, fileName);
+
+    WriteLn();
+end;
+
+{
+    Get the number of lines of the file
+}
+function getLines(var fileIn : fileType):Integer;
+var
+    counter : Integer;
+
+begin
+    counter := 0;
+
+    Reset(fileIn);
+
+    while NOT EOF(fileIn) do begin
+        ReadLn(fileIn);
+        inc(counter);
+    end;
+
+    Close(fileIn);
+
+    getLines := counter;
+
     WriteLn();
 end;
 
@@ -38,7 +61,7 @@ begin
 
     WriteLn('Begin filling array');
 
-    for i := 1 to N do begin
+    for i := 1 to Length(arr) do begin
         ReadLn(fileIn, arr[i]);
     end;
 
@@ -95,16 +118,15 @@ end;
 var
     arr : array1d;
     fileInput : fileType;
-    isArraySorted : Boolean;
     doubleElements : Integer;
 
 begin
     getFile(fileInput);
+    SetLength(arr, getLines(fileInput));
     fillArray(arr, fileInput);
-    isArraySorted := isArrayAscending(arr);
     doubleElements := arrayDoublesCount(arr);
 
-    if isArraySorted then begin
+    if isArrayAscending(arr) then begin
         WriteLn('The array is sorted in ascending order.');
     end else begin
         WriteLn('The array is NOT sorted in ascending order.');
