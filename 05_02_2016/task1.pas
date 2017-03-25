@@ -1,8 +1,8 @@
 {
     Create a program that reads a file name,
-    creates an array from the numbers on each line of the file,
-    checks if the array is sorted in ascending order,
-    checks if there are doubles with the same value and how many are there
+    creates an array from the integers on each line of the file,
+    checks if the array is sorted in descending order,
+    checks if there are triples with the same value and how many are there
 }
 
 program task1;
@@ -28,7 +28,7 @@ end;
 {
     Get the number of lines of the file
 }
-function getLines(var fileIn : fileType):Integer;
+function getFileLines(var fileIn : fileType):Integer;
 var
     counter : Integer;
 
@@ -44,7 +44,7 @@ begin
 
     Close(fileIn);
 
-    getLines := counter;
+    getFileLines := counter;
 
     WriteLn();
 end;
@@ -75,7 +75,7 @@ end;
 {
     Check if the array is sorted in ascending order
 }
-function isArrayAscending(arr : array1d):Boolean;
+function isArrayDescending(arr : array1d):Boolean;
 var
     isSorted: Boolean;
     i : Integer;
@@ -84,57 +84,59 @@ begin
     isSorted := true;
 
     for i := 1 to Length(arr) - 1 do begin
-        if arr[i] > arr[i + 1] then begin
+        if arr[i] < arr[i + 1] then begin
             isSorted := false;
             break;
         end;
     end;
 
-    isArrayAscending := isSorted;
+    isArrayDescending := isSorted;
 end;
 
 {
     Check if there are doubles with the same value and how many are there
 }
-function arrayDoublesCount(arr : array1d):Integer;
+function arrayTriplesCount(arr : array1d):Integer;
 var
-    i, j : Integer;
+    i, j, k : Integer;
     count : Integer;
 
 begin
     count := 0;
 
-    for i := 1 to Length(arr) - 1 do begin
-        for j := i + 1 to Length(arr) do begin
-            if arr[i] = arr[j] then begin
-                inc(count);
+    for i := 1 to Length(arr) - 2 do begin
+        for j := i + 1 to Length(arr) - 1 do begin
+            for k := j + 1 to Length(arr) do begin
+                if (arr[i] = arr[j]) and (arr[j] = arr[k]) then begin
+                    inc(count);
+                end;
             end;
         end;
     end;
 
-    arrayDoublesCount := count;
+    arrayTriplesCount := count;
 end;
 
 var
     arr : array1d;
     fileInput : fileType;
-    doubleElements : Integer;
+    tripleElements : Integer;
 
 begin
     getFile(fileInput);
-    SetLength(arr, getLines(fileInput));
+    SetLength(arr, getFileLines(fileInput));
     fillArray(arr, fileInput);
-    doubleElements := arrayDoublesCount(arr);
+    tripleElements := arrayTriplesCount(arr);
 
-    if isArrayAscending(arr) then begin
-        WriteLn('The array is sorted in ascending order.');
+    if isArrayDescending(arr) then begin
+        WriteLn('The array is sorted in descending order.');
     end else begin
-        WriteLn('The array is NOT sorted in ascending order.');
+        WriteLn('The array is NOT sorted in descending order.');
     end;
 
-    if doubleElements > 0 then begin
-        WriteLn('There are ', doubleElements, ' doubles in the array.');
+    if tripleElements > 0 then begin
+        WriteLn('There are ', tripleElements, ' triples in the array.');
     end else begin
-        WriteLn('There are no doubles in the array.');
+        WriteLn('There are no triples in the array.');
     end;
 end.
