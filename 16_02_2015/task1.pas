@@ -7,27 +7,24 @@
 
 program task1;
 
-const N = 5;
-
 type
-    // array2d = Array of Array of Integer;
-    matrix2d = Array[1..N, 1..N] of Integer;
-    array1d = Array[1..N] of Integer;
+    array2d = Array of Array of Integer;
+    array1d = Array of Integer;
 
-// procedure setArraySize(size : Integer; var arr : array2d);
-// begin
-//     SetLength(arr, size, size);
-// end;
+procedure setArraySize(size : Integer; var arr : array2d);
+begin
+    SetLength(arr, size, size);
+end;
 
-procedure fillArray(var arr : matrix2d);
+procedure fillArray(var arr : array2d);
 var
     i, j : Integer;
 
 begin
-    for i := 1 to Length(arr) do begin
-        for j := 1 to Length(arr) do begin
+    for i := 0 to Length(arr) - 1 do begin
+        for j := 0 to Length(arr) - 1 do begin
             if i <> j then begin
-                Write('Enter [', i, '][', j, '] element : ');
+                Write('Enter [', i + 1, '][', j + 1, '] element : ');
                 ReadLn(arr[i, j]);
             end else begin
                 arr[i,j] := 0;
@@ -36,16 +33,18 @@ begin
     end;
 end;
 
-procedure findMinimalElements(var arr : matrix2d; var minValues : array1d);
+procedure findMinimalElements(var arr : array2d; var minValues : array1d);
 var
     i, j: Integer;
     min : Integer;
 
 begin
-    for i := 1 to Length(arr) do begin
-        min := arr[i, 1];
+    SetLength(minValues, Length(arr));
 
-        for j := 1 to Length(arr) do begin
+    for i := 0 to Length(arr) - 1 do begin
+        min := arr[i, 0];
+
+        for j := 0 to Length(arr) - 1 do begin
             if arr[i, j] < min then begin
                 min := arr[i, j];
             end;
@@ -63,28 +62,28 @@ var
 begin
     sum := 0;
 
-    for i := 1 to Length(minValues) do begin
+    for i := 0 to Length(minValues) - 1 do begin
         sum := sum + minValues[i];
-        WriteLn('sum after ', i, ' element: ', sum);
+        WriteLn('sum after ', i + 1, ' row''s minimal element: ', sum);
     end;
 end;
 
 var
-    arr : matrix2d;
+    arr : array2d;
     minimalValues : array1d;
-    // size : Integer;
+    size : Integer;
 
 begin
-    // repeat
-    //     Write('Enter matrix size (< 10): ');
-    //     ReadLn(size);
-    // until size < 10;
+    repeat
+        Write('Enter matrix size (< 10): ');
+        ReadLn(size);
+    until size < 10;
 
-    // setArraySize(size, arr);
-
-    // WriteLn('Matrix size: ', Length(arr));
+    setArraySize(size, arr);
 
     fillArray(arr);
+
     findMinimalElements(arr, minimalValues);
+
     writeMinimalElements(minimalValues);
 end.

@@ -61,7 +61,7 @@ begin
 
     WriteLn('Begin filling array');
 
-    for i := 1 to Length(arr) do begin
+    for i := 0 to Length(arr) - 1 do begin
         ReadLn(fileIn, arr[i]);
     end;
 
@@ -83,7 +83,7 @@ var
 begin
     isSorted := true;
 
-    for i := 1 to Length(arr) - 1 do begin
+    for i := 0 to Length(arr) - 2 do begin
         if arr[i] > arr[i + 1] then begin
             isSorted := false;
             break;
@@ -104,8 +104,8 @@ var
 begin
     count := 0;
 
-    for i := 1 to Length(arr) - 1 do begin
-        for j := i + 1 to Length(arr) do begin
+    for i := 0 to Length(arr) - 2 do begin
+        for j := i + 1 to Length(arr) - 1 do begin
             if arr[i] = arr[j] then begin
                 inc(count);
             end;
