@@ -51,7 +51,8 @@ end;
 }
 procedure countIntegers(str : String);
 var
-    i, j : Integer;
+    i : Integer;
+    currentInteger : Integer;
     code : Integer;
     counter : Integer;
 
@@ -59,7 +60,7 @@ begin
     counter := 0;
 
     for i := 1 to Length(str) do begin
-        Val(str[i], j, code);
+        Val(str[i], currentInteger, code);
 
         if code = 0 then begin
             counter := counter + 1;
